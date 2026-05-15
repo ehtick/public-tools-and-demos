@@ -449,14 +449,12 @@ const TRUCK_PATHS = [
 ]
 
 const TERRAIN_TRAIL_COORDS = [
-  [7.7481, 46.0207],
-  [7.742, 46.0163],
-  [7.7378, 46.0113],
-  [7.733, 46.0063],
-  [7.7285, 46.0012],
-  [7.7245, 45.9962],
-  [7.7213, 45.9922],
-  [7.7191, 45.9887]
+  [14.405, 40.814],
+  [14.412, 40.816],
+  [14.418, 40.8178],
+  [14.422, 40.819],
+  [14.4248, 40.8175],
+  [14.426, 40.8211]
 ]
 
 const CUSTOM_LAYERS = [
@@ -1458,12 +1456,12 @@ export default function App() {
     const aid = activationIdRef.current
     const map = mapRef.current
 
-    // Zermatt, Switzerland — Schwarzsee Trail beneath the Matterhorn
+    // Mount Vesuvius, Italy — crater trail from Ercolano
     map.flyTo({
-      center: [7.715, 46.006],
-      zoom: 12.5,
-      pitch: 52,
-      bearing: 210,
+      center: [14.422, 40.819],
+      zoom: 13,
+      pitch: 75,
+      bearing: 135,
       duration: DURATION
     })
 
@@ -1477,7 +1475,7 @@ export default function App() {
     }
     map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 })
 
-    // Schwarzsee hiking trail
+    // Vesuvius crater trail
     map.addSource('terrain-trail-source', {
       type: 'geojson',
       data: {
@@ -1506,12 +1504,12 @@ export default function App() {
       return el
     }
     const startMarker = new mapboxgl.Marker({
-      element: makeTrailMarker('Zermatt', 'trail-start')
+      element: makeTrailMarker('Ercolano', 'trail-start')
     })
       .setLngLat(TERRAIN_TRAIL_COORDS[0])
       .addTo(map)
     const endMarker = new mapboxgl.Marker({
-      element: makeTrailMarker('Schwarzsee', 'trail-end')
+      element: makeTrailMarker('Crater Rim', 'trail-end')
     })
       .setLngLat(TERRAIN_TRAIL_COORDS[TERRAIN_TRAIL_COORDS.length - 1])
       .addTo(map)
