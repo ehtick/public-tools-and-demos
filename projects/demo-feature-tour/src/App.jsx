@@ -374,25 +374,25 @@ const NAV_MANEUVERS = [
   { idx: 292, dir: '📍', instruction: 'Arrived at destination' }
 ]
 
-const WAREHOUSE_COORD = [-87.6503, 41.8819]
+const WAREHOUSE_COORD = [-87.650294, 41.881734]
 
 const PICKUP_LOCATIONS = [
   {
     id: 'pickup-1',
     label: 'Lincoln Park',
-    lngLat: [-87.6366, 41.9217],
+    lngLat: [-87.63645, 41.921703],
     color: '#E91E63'
   },
   {
     id: 'pickup-2',
     label: 'Wicker Park',
-    lngLat: [-87.6826, 41.9089],
+    lngLat: [-87.682308, 41.908904],
     color: '#9C27B0'
   },
   {
     id: 'pickup-3',
     label: 'Hyde Park',
-    lngLat: [-87.5917, 41.7943],
+    lngLat: [-87.591664, 41.7943],
     color: '#FF9800'
   }
 ]
@@ -403,15 +403,61 @@ const TRUCK_PATHS = [
     color: '#FF5A36',
     label: 'Truck A',
     path: [
-      [-87.6503, 41.8819],
-      [-87.6503, 41.89],
-      [-87.648, 41.9],
-      [-87.642, 41.91],
-      [-87.6366, 41.9217],
-      [-87.642, 41.91],
-      [-87.648, 41.9],
-      [-87.6503, 41.89],
-      [-87.6503, 41.8819]
+      [-87.650294, 41.881734],
+      [-87.647945, 41.881773],
+      [-87.645757, 41.882364],
+      [-87.646015, 41.886212],
+      [-87.649098, 41.889962],
+      [-87.652735, 41.892485],
+      [-87.656954, 41.895349],
+      [-87.660053, 41.899849],
+      [-87.660891, 41.903793],
+      [-87.661536, 41.907216],
+      [-87.664336, 41.910452],
+      [-87.662519, 41.910709],
+      [-87.660856, 41.910738],
+      [-87.659067, 41.910764],
+      [-87.655697, 41.910804],
+      [-87.653602, 41.910837],
+      [-87.651133, 41.910879],
+      [-87.649796, 41.9109],
+      [-87.648397, 41.910924],
+      [-87.646008, 41.910926],
+      [-87.641787, 41.910997],
+      [-87.63858, 41.911039],
+      [-87.638639, 41.912933],
+      [-87.638747, 41.916353],
+      [-87.638631, 41.918325],
+      [-87.63614, 41.918684],
+      [-87.636405, 41.920263],
+      [-87.63645, 41.921703],
+      [-87.636405, 41.920263],
+      [-87.63614, 41.918684],
+      [-87.638631, 41.918325],
+      [-87.638747, 41.916353],
+      [-87.638639, 41.912933],
+      [-87.63858, 41.911039],
+      [-87.641787, 41.910997],
+      [-87.646008, 41.910926],
+      [-87.648397, 41.910924],
+      [-87.649796, 41.9109],
+      [-87.651133, 41.910879],
+      [-87.653602, 41.910837],
+      [-87.655697, 41.910804],
+      [-87.659067, 41.910764],
+      [-87.660856, 41.910738],
+      [-87.662519, 41.910709],
+      [-87.664336, 41.910452],
+      [-87.661536, 41.907216],
+      [-87.660891, 41.903793],
+      [-87.660053, 41.899849],
+      [-87.656954, 41.895349],
+      [-87.652735, 41.892485],
+      [-87.649098, 41.889962],
+      [-87.646015, 41.886212],
+      [-87.645757, 41.882364],
+      [-87.647945, 41.881773],
+      [-87.650294, 41.881734]
     ]
   },
   {
@@ -419,15 +465,63 @@ const TRUCK_PATHS = [
     color: '#FFC107',
     label: 'Truck B',
     path: [
-      [-87.6503, 41.8819],
-      [-87.655, 41.886],
-      [-87.665, 41.894],
-      [-87.675, 41.901],
-      [-87.6826, 41.9089],
-      [-87.675, 41.901],
-      [-87.665, 41.894],
-      [-87.655, 41.886],
-      [-87.6503, 41.8819]
+      [-87.650294, 41.881734],
+      [-87.648655, 41.881761],
+      [-87.64736, 41.881782],
+      [-87.64573, 41.881801],
+      [-87.645685, 41.885013],
+      [-87.646101, 41.886419],
+      [-87.647638, 41.88874],
+      [-87.650697, 41.891004],
+      [-87.652661, 41.892432],
+      [-87.655395, 41.894302],
+      [-87.657382, 41.895695],
+      [-87.659121, 41.897849],
+      [-87.660726, 41.901461],
+      [-87.660891, 41.903793],
+      [-87.660873, 41.905861],
+      [-87.662221, 41.90796],
+      [-87.664109, 41.91009],
+      [-87.664656, 41.910674],
+      [-87.666053, 41.910666],
+      [-87.666678, 41.910655],
+      [-87.668209, 41.910625],
+      [-87.670658, 41.910584],
+      [-87.672994, 41.910548],
+      [-87.675021, 41.910528],
+      [-87.67731, 41.910495],
+      [-87.678098, 41.910483],
+      [-87.679971, 41.910445],
+      [-87.682336, 41.909945],
+      [-87.682308, 41.908904],
+      [-87.682336, 41.909945],
+      [-87.679971, 41.910445],
+      [-87.678098, 41.910483],
+      [-87.67731, 41.910495],
+      [-87.675021, 41.910528],
+      [-87.672994, 41.910548],
+      [-87.670658, 41.910584],
+      [-87.668209, 41.910625],
+      [-87.666678, 41.910655],
+      [-87.666053, 41.910666],
+      [-87.664656, 41.910674],
+      [-87.664109, 41.91009],
+      [-87.662221, 41.90796],
+      [-87.660873, 41.905861],
+      [-87.660891, 41.903793],
+      [-87.660726, 41.901461],
+      [-87.659121, 41.897849],
+      [-87.657382, 41.895695],
+      [-87.655395, 41.894302],
+      [-87.652661, 41.892432],
+      [-87.650697, 41.891004],
+      [-87.647638, 41.88874],
+      [-87.646101, 41.886419],
+      [-87.645685, 41.885013],
+      [-87.64573, 41.881801],
+      [-87.64736, 41.881782],
+      [-87.648655, 41.881761],
+      [-87.650294, 41.881734]
     ]
   },
   {
@@ -435,15 +529,61 @@ const TRUCK_PATHS = [
     color: '#00C853',
     label: 'Truck C',
     path: [
-      [-87.6503, 41.8819],
-      [-87.635, 41.87],
-      [-87.62, 41.854],
-      [-87.605, 41.83],
-      [-87.5917, 41.7943],
-      [-87.605, 41.83],
-      [-87.62, 41.854],
-      [-87.635, 41.87],
-      [-87.6503, 41.8819]
+      [-87.650294, 41.881734],
+      [-87.646881, 41.881788],
+      [-87.645958, 41.879116],
+      [-87.645687, 41.874009],
+      [-87.644976, 41.869422],
+      [-87.644384, 41.857773],
+      [-87.645693, 41.853227],
+      [-87.645743, 41.852016],
+      [-87.644151, 41.848852],
+      [-87.640432, 41.846815],
+      [-87.635238, 41.846776],
+      [-87.630109, 41.847114],
+      [-87.622411, 41.847889],
+      [-87.612672, 41.84745],
+      [-87.60817, 41.836799],
+      [-87.606497, 41.831634],
+      [-87.601574, 41.826791],
+      [-87.598336, 41.820978],
+      [-87.591637, 41.813337],
+      [-87.586509, 41.807612],
+      [-87.581745, 41.803117],
+      [-87.582195, 41.799669],
+      [-87.585511, 41.7996],
+      [-87.587449, 41.796161],
+      [-87.589393, 41.795443],
+      [-87.592006, 41.79546],
+      [-87.591675, 41.794763],
+      [-87.591664, 41.7943],
+      [-87.591675, 41.794763],
+      [-87.592006, 41.79546],
+      [-87.589393, 41.795443],
+      [-87.587449, 41.796161],
+      [-87.585511, 41.7996],
+      [-87.582195, 41.799669],
+      [-87.581745, 41.803117],
+      [-87.586509, 41.807612],
+      [-87.591637, 41.813337],
+      [-87.598336, 41.820978],
+      [-87.601574, 41.826791],
+      [-87.606497, 41.831634],
+      [-87.60817, 41.836799],
+      [-87.612672, 41.84745],
+      [-87.622411, 41.847889],
+      [-87.630109, 41.847114],
+      [-87.635238, 41.846776],
+      [-87.640432, 41.846815],
+      [-87.644151, 41.848852],
+      [-87.645743, 41.852016],
+      [-87.645693, 41.853227],
+      [-87.644384, 41.857773],
+      [-87.644976, 41.869422],
+      [-87.645687, 41.874009],
+      [-87.645958, 41.879116],
+      [-87.646881, 41.881788],
+      [-87.650294, 41.881734]
     ]
   }
 ]
@@ -566,6 +706,9 @@ export default function App() {
     startCameraRotationRef.current = startCameraRotation
 
     const stopCameraRotation = () => {
+      // Don't interfere with scenes that manage their own animation loop
+      if (rotationTypeRef.current === 'navigation') return
+      if (rotationTypeRef.current === 'asset-tracking') return
       globeRotatingRef.current = false
       if (animFrameRef.current) {
         cancelAnimationFrame(animFrameRef.current)
@@ -1014,6 +1157,7 @@ export default function App() {
   const activateNavigation = useCallback(() => {
     setLightPreset('dusk')
     setColorTheme('default')
+    rotationTypeRef.current = 'navigation'
     const map = mapRef.current
     const aid = activationIdRef.current
 
@@ -1159,16 +1303,50 @@ export default function App() {
       const LOOKAHEAD = 15
       let nextManeuver = 0
       let currentPopup = null
+      let userInteracting = false
+      let interactTimeout = null
 
-      const animate = () => {
+      const onUserInteract = () => {
+        userInteracting = true
+        clearTimeout(interactTimeout)
+        interactTimeout = setTimeout(() => {
+          userInteracting = false
+        }, 2000)
+      }
+      map.on('mousedown', onUserInteract)
+      map.on('wheel', onUserInteract)
+      map.on('touchstart', onUserInteract)
+
+      // Use setInterval so the loop is immune to requestAnimationFrame
+      // cancellation that can occur internally during Mapbox scroll-zoom.
+      let navIntervalId = null
+
+      const tick = () => {
         if (activationIdRef.current !== aid) {
+          clearInterval(navIntervalId)
+          clearTimeout(interactTimeout)
+          map.off('mousedown', onUserInteract)
+          map.off('wheel', onUserInteract)
+          map.off('touchstart', onUserInteract)
           if (currentPopup) {
             currentPopup.remove()
             currentPopup = null
           }
           return
         }
-        coordT = Math.min(coordT + speed, NAV_ROUTE.length - 1)
+
+        coordT += speed
+
+        // Loop back to start when route is complete
+        if (coordT >= NAV_ROUTE.length - 1) {
+          coordT = 0
+          smoothBearing = initBearing
+          nextManeuver = 0
+          if (currentPopup) {
+            currentPopup.remove()
+            currentPopup = null
+          }
+        }
 
         const idx = Math.floor(coordT)
         const frac = coordT - idx
@@ -1214,21 +1392,27 @@ export default function App() {
           }
         }
 
-        map.getSource('nav-puck-source').setData({
-          type: 'Feature',
-          geometry: { type: 'Point', coordinates: pos },
-          properties: {}
-        })
-        map.jumpTo({ center: pos, bearing: smoothBearing, pitch: 50, zoom: 16 })
-
-        if (coordT < NAV_ROUTE.length - 1) {
-          animFrameRef.current = requestAnimationFrame(animate)
+        const src = map.getSource('nav-puck-source')
+        if (src) {
+          src.setData({
+            type: 'Feature',
+            geometry: { type: 'Point', coordinates: pos },
+            properties: {}
+          })
+        }
+        if (!userInteracting) {
+          map.jumpTo({
+            center: pos,
+            bearing: smoothBearing,
+            pitch: 50,
+            zoom: 16
+          })
         }
       }
 
       setTimeout(() => {
         if (activationIdRef.current !== aid) return
-        animate()
+        navIntervalId = setInterval(tick, 16)
       }, 1500)
     }, 2000)
   }, [])
@@ -1236,6 +1420,7 @@ export default function App() {
   const activateAssetTracking = useCallback(() => {
     setLightPreset('day')
     setColorTheme('default')
+    rotationTypeRef.current = 'asset-tracking'
     const map = mapRef.current
     const aid = activationIdRef.current
 
@@ -1368,7 +1553,7 @@ export default function App() {
         minzoom: 9,
         paint: {
           'line-color': truck.color,
-          'line-width': 2,
+          'line-width': 5,
           'line-opacity': 0.65
         },
         slot: 'top'
@@ -1376,7 +1561,7 @@ export default function App() {
     })
 
     // Truck markers with trail state
-    const truckStates = TRUCK_PATHS.map((truck) => {
+    const truckStates = TRUCK_PATHS.map((truck, i) => {
       const el = document.createElement('div')
       el.className = 'truck-marker'
       el.innerHTML = `
@@ -1387,18 +1572,30 @@ export default function App() {
         </div>
         <span class="truck-label" style="color:${truck.color}">${truck.label}</span>
       `
+      const totalSegments = truck.path.length - 1
+      const globalT = (i / TRUCK_PATHS.length) * totalSegments
+      const startSegment = Math.floor(globalT)
+      const startT = globalT - startSegment
+      const startPos = [
+        truck.path[startSegment][0] +
+          (truck.path[startSegment + 1][0] - truck.path[startSegment][0]) *
+            startT,
+        truck.path[startSegment][1] +
+          (truck.path[startSegment + 1][1] - truck.path[startSegment][1]) *
+            startT
+      ]
       const marker = new mapboxgl.Marker({ element: el })
-        .setLngLat(truck.path[0])
+        .setLngLat(startPos)
         .addTo(map)
       markersRef.current.push(marker)
       fleetMarkers.push(marker)
       return {
         ...truck,
         marker,
-        t: 0,
-        segment: 0,
-        speed: 0.003 + Math.random() * 0.002,
-        trail: [[...truck.path[0]]]
+        t: startT,
+        segment: startSegment,
+        speed: 0.015 + Math.random() * 0.005,
+        trail: [[...startPos]]
       }
     })
 
@@ -1435,7 +1632,7 @@ export default function App() {
         truck.marker.setLngLat(pos)
         if (frameCount % 3 === 0) {
           truck.trail.push([...pos])
-          if (truck.trail.length > 120) truck.trail.shift()
+          if (truck.trail.length > 300) truck.trail.shift()
           const src = map.getSource(`trail-${truck.id}-source`)
           if (src)
             src.setData({
