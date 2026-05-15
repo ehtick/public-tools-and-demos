@@ -881,6 +881,7 @@ export default function App() {
   const activateMarkers = useCallback(() => {
     setLightPreset('day')
     setColorTheme('default')
+    const aid = activationIdRef.current
     mapRef.current.flyTo({
       center: [-122.404, 37.796],
       zoom: 14,
@@ -889,43 +890,51 @@ export default function App() {
       duration: DURATION
     })
 
-    SF_MARKERS.forEach(({ lngLat, label, emoji, description, image }) => {
-      const el = document.createElement('div')
-      el.className = 'custom-marker'
-      el.innerHTML = `
-        <div class="marker-pin">
-          <span class="marker-emoji">${emoji}</span>
-        </div>
-        <span class="marker-label">${label}</span>
-      `
+    pendingTimeoutRef.current = setTimeout(() => {
+      pendingTimeoutRef.current = null
+      if (activationIdRef.current !== aid) return
 
-      const popup = new mapboxgl.Popup({
-        offset: 32,
-        closeButton: false,
-        closeOnClick: false,
-        maxWidth: '220px'
-      }).setHTML(`
-          <div class="popup-card">
-            <img class="popup-image" src="${image}" alt="${label}" />
-            <div class="popup-body">
-              <div class="popup-title">${emoji} ${label}</div>
-              <div class="popup-desc">${description}</div>
-            </div>
+      SF_MARKERS.forEach(({ lngLat, label, emoji, description, image }) => {
+        const el = document.createElement('div')
+        el.className = 'custom-marker'
+        el.innerHTML = `
+          <div class="marker-pin">
+            <img class="marker-thumb" src="${image.replace(
+              '/220/120',
+              '/60/60'
+            )}" alt="${label}" />
           </div>
-        `)
+          <span class="marker-label">${label}</span>
+        `
 
-      const marker = new mapboxgl.Marker({ element: el })
-        .setLngLat(lngLat)
-        .setPopup(popup)
-        .addTo(mapRef.current)
+        const popup = new mapboxgl.Popup({
+          offset: 32,
+          closeButton: false,
+          closeOnClick: false,
+          maxWidth: '220px'
+        }).setHTML(`
+            <div class="popup-card">
+              <img class="popup-image" src="${image}" alt="${label}" />
+              <div class="popup-body">
+                <div class="popup-title">${emoji} ${label}</div>
+                <div class="popup-desc">${description}</div>
+              </div>
+            </div>
+          `)
 
-      el.addEventListener('mouseenter', () =>
-        marker.getPopup().addTo(mapRef.current)
-      )
-      el.addEventListener('mouseleave', () => marker.getPopup().remove())
+        const marker = new mapboxgl.Marker({ element: el })
+          .setLngLat(lngLat)
+          .setPopup(popup)
+          .addTo(mapRef.current)
 
-      markersRef.current.push(marker)
-    })
+        el.addEventListener('mouseenter', () =>
+          marker.getPopup().addTo(mapRef.current)
+        )
+        el.addEventListener('mouseleave', () => marker.getPopup().remove())
+
+        markersRef.current.push(marker)
+      })
+    }, DURATION * 0.65)
   }, [])
 
   const activateDataOverlay = useCallback(async () => {
