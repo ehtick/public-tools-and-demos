@@ -1658,6 +1658,7 @@ export default function App() {
   const activateTerrain = useCallback(() => {
     setLightPreset('dawn')
     setColorTheme('faded')
+    setIsSatellite(true)
     rotationTypeRef.current = 'terrain'
     const aid = activationIdRef.current
     const map = mapRef.current
