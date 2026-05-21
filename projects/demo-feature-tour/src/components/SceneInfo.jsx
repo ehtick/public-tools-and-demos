@@ -95,8 +95,9 @@ const SCENE_BODY = {
       <A href='https://docs.mapbox.com/data/tilesets/reference/mapbox-terrain-dem-v1/'>
         Mapbox Terrain DEM
       </A>{' '}
-      — a global elevation dataset loaded as a <C>raster-dem</C> source with
-      configurable vertical exaggeration.
+      — a global elevation dataset. The{' '}
+      <A href='https://docs.mapbox.com/maps/satellite/'>Mapbox Satellite</A>{' '}
+      raster tileset can be draped over terrain for a photorealistic landscape.
     </>
   )
 }

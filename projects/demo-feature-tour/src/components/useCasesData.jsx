@@ -112,7 +112,7 @@ export const USE_CASES = [
   },
   {
     id: 'asset-tracking',
-    label: 'Fleet Management',
+    label: 'Asset Tracking',
     description: 'Isochrones, live locations, and matrices',
     icon: (
       <svg
