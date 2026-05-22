@@ -4,7 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import './App.css'
 import UseCasePanel from './components/UseCasePanel'
 import MapControls from './components/MapControls'
-import SceneInfo from './components/SceneInfo'
+//import SceneInfo from './components/SceneInfo'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -1795,7 +1795,7 @@ export default function App() {
   return (
     <>
       <div id='map-container' ref={mapContainerRef} />
-      <SceneInfo sceneId={activeUseCase} />
+      {/* <SceneInfo sceneId={activeUseCase} /> */}
       <UseCasePanel activeId={activeUseCase} onSelect={handleUseCaseSelect} />
       <MapControls
         lightPreset={lightPreset}

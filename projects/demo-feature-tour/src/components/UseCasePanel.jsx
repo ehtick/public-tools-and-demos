@@ -1,4 +1,5 @@
 import { USE_CASES } from './useCasesData'
+import SceneInfo from './SceneInfo'
 
 export default function UseCasePanel({ activeId, onSelect }) {
   return (
@@ -20,6 +21,7 @@ export default function UseCasePanel({ activeId, onSelect }) {
           </button>
         ))}
       </div>
+      <SceneInfo sceneId={activeId} />
     </div>
   )
 }
