@@ -673,7 +673,7 @@ export default function App() {
   // ─── Map Init ──────────────────────────────────────────────────────────────
 
   useEffect(() => {
-    mapboxgl.accessToken = import.meta.env.VITE_YOUR_MAPBOX_ACCESS_TOKEN
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/standard',
@@ -1012,7 +1012,16 @@ export default function App() {
               9,
               20
             ],
-            'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 1, 9, 0]
+            'heatmap-opacity': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              7,
+              1,
+              9,
+              0
+            ],
+            'heatmap-emissive-strength': 1
           }
         })
       }
@@ -1053,7 +1062,8 @@ export default function App() {
             ],
             'circle-stroke-color': 'white',
             'circle-stroke-width': 1,
-            'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 8, 1]
+            'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 8, 1],
+            'circle-emissive-strength': 1
           }
         })
       }
@@ -1182,14 +1192,23 @@ export default function App() {
       type: 'line',
       source: 'route-source',
       slot: 'top',
-      paint: { 'line-color': '#ffffff', 'line-width': 9, 'line-opacity': 0.4 }
+      paint: {
+        'line-color': '#ffffff',
+        'line-width': 9,
+        'line-opacity': 0.4,
+        'line-emissive-strength': 1
+      }
     })
     map.addLayer({
       id: 'route-line',
       type: 'line',
       source: 'route-source',
       slot: 'top',
-      paint: { 'line-color': '#4264FB', 'line-width': 5 }
+      paint: {
+        'line-color': '#4264FB',
+        'line-width': 5,
+        'line-emissive-strength': 1
+      }
     })
 
     const makeNavEl = (letter, cls) => {
@@ -1293,6 +1312,9 @@ export default function App() {
           'icon-rotation-alignment': 'viewport',
           'icon-allow-overlap': true,
           'icon-ignore-placement': true
+        },
+        paint: {
+          'icon-emissive-strength': 1
         }
       })
 
@@ -1521,7 +1543,7 @@ export default function App() {
             source: 'isochrone-source',
             minzoom: 9,
             filter: ['==', ['get', 'contour'], min],
-            paint: { 'fill-color': fill },
+            paint: { 'fill-color': fill, 'fill-emissive-strength': 1 },
             slot: 'bottom'
           })
           map.addLayer({
@@ -1533,7 +1555,8 @@ export default function App() {
             paint: {
               'line-color': line,
               'line-width': 1.5,
-              'line-dasharray': [4, 2]
+              'line-dasharray': [4, 2],
+              'line-emissive-strength': 1
             },
             slot: 'bottom'
           })
@@ -1563,7 +1586,8 @@ export default function App() {
         paint: {
           'line-color': truck.color,
           'line-width': 5,
-          'line-opacity': 0.65
+          'line-opacity': 0.65,
+          'line-emissive-strength': 1
         },
         slot: 'top'
       })
@@ -1699,7 +1723,8 @@ export default function App() {
         'line-color': '#FF6B35',
         'line-width': 3,
         'line-dasharray': [2, 2],
-        'line-opacity': 0.9
+        'line-opacity': 0.9,
+        'line-emissive-strength': 1
       }
     })
 
@@ -1742,6 +1767,7 @@ export default function App() {
       if (id === 'globe') {
         cleanup()
         setActiveUseCase('globe')
+        setIsSatellite(false)
         activateGlobe()
         return
       }
@@ -1750,6 +1776,7 @@ export default function App() {
 
       cleanup()
       setActiveUseCase(id)
+      if (id !== 'terrain') setIsSatellite(false)
 
       switch (id) {
         case 'buildings':
