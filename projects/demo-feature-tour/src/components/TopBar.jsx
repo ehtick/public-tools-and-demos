@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useLayoutEffect } from 'react'
 import { USE_CASES } from './useCasesData'
 
 const LIGHT_PRESETS = [
@@ -147,10 +147,62 @@ export default function TopBar({
   setColorTheme
 }) {
   const [openMenu, setOpenMenu] = useState(null)
+  const [collapsed, setCollapsed] = useState(false)
+  const [menuHidden, setMenuHidden] = useState(false)
+  const [menuWidth, setMenuWidth] = useState(null)
 
   const sceneRef = useRef()
   const lightingRef = useRef()
   const themeRef = useRef()
+  const menuRef = useRef()
+  const panelRef = useRef()
+
+  useLayoutEffect(() => {
+    const menu = menuRef.current
+    if (!menu) return
+
+    const updateWidth = () => setMenuWidth(menu.offsetWidth)
+
+    updateWidth()
+    const observer = new ResizeObserver(updateWidth)
+    observer.observe(menu)
+    return () => observer.disconnect()
+  }, [activeId, lightPreset, colorTheme])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 600px)')
+
+    const openForMobile = () => {
+      setCollapsed(false)
+      setMenuHidden(false)
+      setOpenMenu(null)
+    }
+
+    const handleChange = (e) => {
+      if (e.matches) openForMobile()
+    }
+
+    mq.addEventListener('change', handleChange)
+    return () => mq.removeEventListener('change', handleChange)
+  }, [])
+
+  useEffect(() => {
+    if (!collapsed) {
+      setMenuHidden(false)
+      return
+    }
+
+    const panel = panelRef.current
+    if (!panel) return
+
+    const handleTransitionEnd = (e) => {
+      if (e.target !== panel || e.propertyName !== 'transform') return
+      setMenuHidden(true)
+    }
+
+    panel.addEventListener('transitionend', handleTransitionEnd)
+    return () => panel.removeEventListener('transitionend', handleTransitionEnd)
+  }, [collapsed])
 
   useEffect(() => {
     if (!openMenu) return
@@ -163,118 +215,174 @@ export default function TopBar({
     return () => document.removeEventListener('mousedown', handler)
   }, [openMenu])
 
+  const toggleCollapsed = () => {
+    setCollapsed((c) => !c)
+    setOpenMenu(null)
+  }
+
   const activeScene = USE_CASES.find((u) => u.id === activeId)
   const activeLight = LIGHT_PRESETS.find((p) => p.id === lightPreset)
   const activeTheme = COLOR_THEMES.find((t) => t.id === colorTheme)
 
   return (
-    <div className='top-bar'>
-      <ControlField label='Scenes' className='tb-scene-field'>
-        <Dropdown
-          className='tb-scene-dropdown'
-          dropdownRef={sceneRef}
-          open={openMenu === 'scene'}
-          onToggle={() => setOpenMenu((o) => (o === 'scene' ? null : 'scene'))}
-          trigger={
-            <>
-              <span className='tb-scene-icon'>{activeScene?.icon}</span>
-              <span className='tb-scene-label'>{activeScene?.label}</span>
-            </>
-          }
+    <div
+      className={`top-bar-shell${collapsed ? ' is-collapsed' : ''}${
+        menuHidden ? ' is-menu-hidden' : ''
+      }`}
+      style={
+        menuWidth != null ? { '--menu-width': `${menuWidth}px` } : undefined
+      }
+    >
+      <div className='top-bar-panel' ref={panelRef}>
+        <div className='top-bar-body-wrap'>
+          <div className='top-bar-body'>
+            <div className='top-bar' ref={menuRef}>
+              <ControlField label='Scenes' className='tb-scene-field'>
+                <Dropdown
+                  className='tb-scene-dropdown'
+                  dropdownRef={sceneRef}
+                  open={openMenu === 'scene'}
+                  onToggle={() =>
+                    setOpenMenu((o) => (o === 'scene' ? null : 'scene'))
+                  }
+                  trigger={
+                    <>
+                      <span className='tb-scene-icon'>{activeScene?.icon}</span>
+                      <span className='tb-scene-label'>
+                        {activeScene?.label}
+                      </span>
+                    </>
+                  }
+                >
+                  {USE_CASES.map((uc) => (
+                    <button
+                      key={uc.id}
+                      className={`tb-menu-item${
+                        activeId === uc.id ? ' active' : ''
+                      }`}
+                      onClick={() => {
+                        onSelect(uc.id)
+                        setOpenMenu(null)
+                      }}
+                    >
+                      <span className='tb-scene-icon'>{uc.icon}</span>
+                      <span>{uc.label}</span>
+                    </button>
+                  ))}
+                </Dropdown>
+              </ControlField>
+
+              <div className='tb-divider' />
+
+              <ControlField label='Lighting'>
+                <Dropdown
+                  dropdownRef={lightingRef}
+                  open={openMenu === 'lighting'}
+                  onToggle={() =>
+                    setOpenMenu((o) => (o === 'lighting' ? null : 'lighting'))
+                  }
+                  trigger={
+                    <>
+                      <span className='tb-preset-icon'>
+                        {activeLight?.icon}
+                      </span>
+                      <span className='tb-value'>{activeLight?.label}</span>
+                    </>
+                  }
+                >
+                  {LIGHT_PRESETS.map((p) => (
+                    <button
+                      key={p.id}
+                      className={`tb-menu-item${
+                        lightPreset === p.id ? ' active' : ''
+                      }`}
+                      onClick={() => {
+                        setLightPreset(p.id)
+                        setOpenMenu(null)
+                      }}
+                    >
+                      <span className='tb-preset-icon'>{p.icon}</span>
+                      {p.label}
+                    </button>
+                  ))}
+                </Dropdown>
+              </ControlField>
+
+              <div className='tb-divider' />
+
+              <ControlField label='Color'>
+                <Dropdown
+                  dropdownRef={themeRef}
+                  open={openMenu === 'theme'}
+                  onToggle={() =>
+                    setOpenMenu((o) => (o === 'theme' ? null : 'theme'))
+                  }
+                  trigger={
+                    <>
+                      <span className='tb-swatch'>
+                        {activeTheme?.swatches.map((c, i) => (
+                          <span
+                            key={i}
+                            className='tb-swatch-dot'
+                            style={{ background: c }}
+                          />
+                        ))}
+                      </span>
+                      <span className='tb-value'>{activeTheme?.label}</span>
+                    </>
+                  }
+                >
+                  {COLOR_THEMES.map((t) => (
+                    <button
+                      key={t.id}
+                      className={`tb-menu-item${
+                        colorTheme === t.id ? ' active' : ''
+                      }`}
+                      onClick={() => {
+                        setColorTheme(t.id)
+                        setOpenMenu(null)
+                      }}
+                    >
+                      <span className='tb-swatch'>
+                        {t.swatches.map((c, i) => (
+                          <span
+                            key={i}
+                            className='tb-swatch-dot'
+                            style={{ background: c }}
+                          />
+                        ))}
+                      </span>
+                      {t.label}
+                    </button>
+                  ))}
+                </Dropdown>
+              </ControlField>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type='button'
+          className='top-bar-tab'
+          onClick={toggleCollapsed}
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? 'Show map controls' : 'Hide map controls'}
         >
-          {USE_CASES.map((uc) => (
-            <button
-              key={uc.id}
-              className={`tb-menu-item${activeId === uc.id ? ' active' : ''}`}
-              onClick={() => {
-                onSelect(uc.id)
-                setOpenMenu(null)
-              }}
-            >
-              <span className='tb-scene-icon'>{uc.icon}</span>
-              <span>{uc.label}</span>
-            </button>
-          ))}
-        </Dropdown>
-      </ControlField>
-
-      <div className='tb-divider' />
-
-      <ControlField label='Lighting'>
-        <Dropdown
-          dropdownRef={lightingRef}
-          open={openMenu === 'lighting'}
-          onToggle={() =>
-            setOpenMenu((o) => (o === 'lighting' ? null : 'lighting'))
-          }
-          trigger={
-            <>
-              <span className='tb-preset-icon'>{activeLight?.icon}</span>
-              <span className='tb-value'>{activeLight?.label}</span>
-            </>
-          }
-        >
-          {LIGHT_PRESETS.map((p) => (
-            <button
-              key={p.id}
-              className={`tb-menu-item${lightPreset === p.id ? ' active' : ''}`}
-              onClick={() => {
-                setLightPreset(p.id)
-                setOpenMenu(null)
-              }}
-            >
-              <span className='tb-preset-icon'>{p.icon}</span>
-              {p.label}
-            </button>
-          ))}
-        </Dropdown>
-      </ControlField>
-
-      <div className='tb-divider' />
-
-      <ControlField label='Color'>
-        <Dropdown
-          dropdownRef={themeRef}
-          open={openMenu === 'theme'}
-          onToggle={() => setOpenMenu((o) => (o === 'theme' ? null : 'theme'))}
-          trigger={
-            <>
-              <span className='tb-swatch'>
-                {activeTheme?.swatches.map((c, i) => (
-                  <span
-                    key={i}
-                    className='tb-swatch-dot'
-                    style={{ background: c }}
-                  />
-                ))}
-              </span>
-              <span className='tb-value'>{activeTheme?.label}</span>
-            </>
-          }
-        >
-          {COLOR_THEMES.map((t) => (
-            <button
-              key={t.id}
-              className={`tb-menu-item${colorTheme === t.id ? ' active' : ''}`}
-              onClick={() => {
-                setColorTheme(t.id)
-                setOpenMenu(null)
-              }}
-            >
-              <span className='tb-swatch'>
-                {t.swatches.map((c, i) => (
-                  <span
-                    key={i}
-                    className='tb-swatch-dot'
-                    style={{ background: c }}
-                  />
-                ))}
-              </span>
-              {t.label}
-            </button>
-          ))}
-        </Dropdown>
-      </ControlField>
+          <svg
+            className='top-bar-tab-icon'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='1.5'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            aria-hidden='true'
+          >
+            <path d='M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z' />
+            <circle cx='12' cy='12' r='3' />
+          </svg>
+        </button>
+      </div>
     </div>
   )
 }

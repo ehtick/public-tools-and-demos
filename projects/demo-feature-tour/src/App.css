@@ -1331,17 +1331,124 @@
   }
 }
 
+@media (min-width: 601px) {
+  .top-bar-shell {
+    display: contents;
+  }
+
+  .top-bar-panel,
+  .top-bar-body-wrap,
+  .top-bar-body {
+    display: contents;
+  }
+
+  .top-bar-tab {
+    display: none;
+  }
+}
+
 @media (max-width: 600px) {
-  .top-bar {
-    flex-direction: column;
+  .top-bar-shell {
+    position: absolute;
     top: 16px;
     left: 16px;
     right: auto;
-    transform: none;
-    width: max-content;
+    z-index: 20;
     max-width: calc(100vw - 32px);
+  }
+
+  .top-bar-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0;
+    width: max-content;
+    transform: translateX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .top-bar-shell.is-collapsed .top-bar-panel {
+    transform: translateX(calc(-1 * var(--menu-width, 0px)));
+  }
+
+  .top-bar-body-wrap {
+    flex-shrink: 0;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease;
+  }
+
+  .top-bar-shell.is-collapsed .top-bar-body-wrap {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .top-bar-shell.is-collapsed.is-menu-hidden .top-bar-body-wrap {
+    visibility: hidden;
+  }
+
+  .top-bar-body {
+    width: max-content;
+    min-width: max-content;
+  }
+
+  .top-bar {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    flex-direction: column;
+    width: max-content;
+    max-width: calc(100vw - 32px - 2.5rem);
     padding: 12px;
     gap: 14px;
+    border-radius: 8px;
+  }
+
+  .top-bar-shell:not(.is-collapsed) .top-bar {
+    border-top-right-radius: 0;
+  }
+
+  .top-bar-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    background: rgba(10, 10, 14, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    color: #707c8e;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease,
+      border-radius 0.4s ease;
+  }
+
+  .top-bar-shell:not(.is-collapsed) .top-bar-tab {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .top-bar-tab:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #bbc2ce;
+  }
+
+  .top-bar-shell.is-collapsed .top-bar-tab {
+    margin-left: 0;
+    border-radius: 8px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  .top-bar-tab-icon {
+    width: 20px;
+    height: 20px;
   }
 
   .tb-field {
