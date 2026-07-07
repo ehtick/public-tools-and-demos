@@ -46,13 +46,18 @@ export default function App() {
   // ─── Map Init ──────────────────────────────────────────────────────────────
 
   useEffect(() => {
-    mapboxgl.accessToken = import.meta.env.VITE_YOUR_MAPBOX_ACCESS_TOKEN
+    const cooperativeGestures =
+      new URLSearchParams(window.location.search).get('cooperativeGestures') ===
+      'true'
+
     mapRef.current = new mapboxgl.Map({
+      accessToken: import.meta.env.VITE_YOUR_MAPBOX_ACCESS_TOKEN,
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/standard',
       bounds: GLOBE_BOUNDS,
       pitch: 0,
-      bearing: 0
+      bearing: 0,
+      cooperativeGestures
     })
 
     const startCameraRotation = () => {
@@ -246,16 +251,37 @@ export default function App() {
       if (id !== 'terrain') setIsSatellite(false)
 
       switch (id) {
-        case 'buildings':      activate3DBuildings(ctx); break
-        case 'markers':        activateMarkers(ctx); break
-        case 'data-overlay':   activateDataOverlay(ctx); break
-        case 'raster':         activateRaster(ctx); break
-        case 'navigation':     activateNavigation(ctx); break
-        case 'asset-tracking': activateAssetTracking(ctx); break
-        case 'terrain':        activateTerrain(ctx); break
+        case 'buildings':
+          activate3DBuildings(ctx)
+          break
+        case 'markers':
+          activateMarkers(ctx)
+          break
+        case 'data-overlay':
+          activateDataOverlay(ctx)
+          break
+        case 'raster':
+          activateRaster(ctx)
+          break
+        case 'navigation':
+          activateNavigation(ctx)
+          break
+        case 'asset-tracking':
+          activateAssetTracking(ctx)
+          break
+        case 'terrain':
+          activateTerrain(ctx)
+          break
       }
     },
-    [mapLoaded, activeUseCase, cleanup, setLightPreset, setColorTheme, setIsSatellite]
+    [
+      mapLoaded,
+      activeUseCase,
+      cleanup,
+      setLightPreset,
+      setColorTheme,
+      setIsSatellite
+    ]
   )
 
   // ─── Render ────────────────────────────────────────────────────────────────
